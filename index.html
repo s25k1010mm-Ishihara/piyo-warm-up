@@ -1,0 +1,381 @@
+<!doctype html><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; media-src data: blob:; base-uri 'none'; form-action 'none'">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Piyo Warm-Up</title>
+<style>
+:root{--sky:#2AA7E8;--sky-d:#1A7DB8;--navy:#1a4f78;--ink:#1a6fa8;--yel:#FFE680;--yel-d:#FFB300;--bg1:#DFF3FF}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:system-ui,"Hiragino Sans","Noto Sans JP",sans-serif;background:linear-gradient(#DFF3FF,#fff 60%);min-height:100vh;color:var(--navy);-webkit-tap-highlight-color:transparent}
+button{font-family:inherit;color:inherit}
+button:focus-visible{outline:3px solid var(--yel-d);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding:14px 16px 40px}
+header{display:flex;align-items:center;justify-content:space-between;padding:6px 0 10px}
+.logo{font-weight:800;font-size:22px;color:var(--ink);letter-spacing:.2px;display:flex;align-items:center;gap:6px}
+.lang{display:flex;background:#fff;border-radius:20px;padding:3px;box-shadow:0 2px 6px #1a6fa822}
+.lang button{border:0;background:transparent;padding:6px 12px;border-radius:16px;font-size:13px;font-weight:700;cursor:pointer;color:var(--ink)}
+.lang button[aria-pressed=true]{background:var(--sky);color:#fff}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fff;padding:5px;border-radius:22px;box-shadow:0 2px 8px #1a6fa81f}
+.tabs button{border:0;background:transparent;padding:11px 6px;border-radius:18px;font-weight:700;font-size:15px;cursor:pointer;color:var(--ink)}
+.tabs button[aria-selected=true]{background:var(--sky);color:#fff;box-shadow:0 3px 0 var(--sky-d)}
+.chips{display:flex;gap:8px;justify-content:center;margin:12px 0 4px;flex-wrap:wrap}
+.chips button{border:2px solid #bfe3f7;background:#fff;border-radius:20px;padding:6px 14px;font-size:14px;cursor:pointer;font-weight:600}
+.chips button[aria-pressed=true]{border-color:var(--sky);background:#e8f6ff;color:var(--ink)}
+.stage{position:relative;text-align:center;padding:6px 0 0}
+.bubble{position:relative;background:var(--yel);border-radius:18px;padding:12px 14px;margin:8px auto 14px;max-width:360px;font-size:15px;line-height:1.55;font-weight:600;box-shadow:0 3px 0 #f0cf74;min-height:62px;display:flex;align-items:center;justify-content:center}
+.bubble:after{content:"";position:absolute;bottom:-9px;left:50%;margin-left:-9px;border:9px solid transparent;border-bottom:0;border-top-color:var(--yel)}
+.chara{width:190px;height:190px;margin:6px auto 4px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#fff,#cdeeff);display:flex;align-items:center;justify-content:center;position:relative;box-shadow:inset 0 -8px 0 #b5e1f7}
+.chara .em{font-size:104px;line-height:1;display:block;animation:bob 2.4s ease-in-out infinite}
+.chara.egg .em{animation:wob 1.8s ease-in-out infinite}
+.chara.sad .em{filter:grayscale(.55) brightness(.95);transform:rotate(-8deg);animation:none}
+.chara.sad{background:radial-gradient(circle at 50% 40%,#f2f2f2,#d6e2ea)}
+.drop{position:absolute;right:30px;top:36px;font-size:30px;display:none;animation:drip 1.6s infinite}
+.chara.sad .drop{display:block}
+.chara.pop .em{animation:pop .5s}
+@keyframes bob{50%{transform:translateY(-8px)}}
+@keyframes wob{25%{transform:rotate(-7deg)}75%{transform:rotate(7deg)}}
+@keyframes drip{0%{transform:translateY(0);opacity:1}100%{transform:translateY(28px);opacity:0}}
+@keyframes pop{30%{transform:scale(1.3) rotate(8deg)}100%{transform:scale(1)}}
+.lvl{display:inline-flex;gap:8px;align-items:center;background:#fff;border-radius:20px;padding:6px 16px;font-weight:800;color:var(--ink);box-shadow:0 2px 6px #1a6fa822;margin-top:6px}
+.mood{font-size:12px;background:var(--yel);padding:2px 9px;border-radius:12px;color:#7a5200}
+.mood.sad{background:#cfd8de;color:#455a64}
+.bar{height:16px;background:#fff;border-radius:10px;margin:12px 34px 6px;overflow:hidden;box-shadow:inset 0 1px 3px #1a6fa833}
+.bar div{height:100%;background:linear-gradient(90deg,#58c2f0,var(--sky));border-radius:10px;transition:width .6s}
+.next{font-size:13px;color:#4a7fa3;text-align:center}
+.bigwrap{position:relative;text-align:center;margin:22px 0 8px}
+.big{width:240px;max-width:80%;padding:18px 0;border:0;border-radius:44px;background:var(--sky);color:#fff;font-size:26px;font-weight:800;box-shadow:0 7px 0 var(--sky-d);cursor:pointer;transition:transform .08s,box-shadow .08s}
+.big:active{transform:translateY(5px);box-shadow:0 2px 0 var(--sky-d)}
+.big:focus-visible{outline-color:var(--yel-d)}
+.cf{position:absolute;left:50%;top:50%;font-size:24px;pointer-events:none;animation:fly .9s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(240deg);opacity:0}}
+.card{background:#fff;border-radius:20px;padding:16px;margin-top:16px;box-shadow:0 3px 10px #1a6fa81f}
+.card h2{margin:0 0 10px;font-size:16px;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
+.day{background:#f1f9ff;border-radius:12px;padding:6px 0;font-size:11px;color:#4a7fa3}
+.day .s{font-size:22px;display:block;margin-top:2px;min-height:28px}
+.day.today{outline:2px solid var(--yel-d);background:#fff8dc}
+.sub{font-size:13px;color:#4a7fa3;margin-top:8px;text-align:center}
+.evo{display:flex;justify-content:space-around;text-align:center}
+.evo div{font-size:36px;opacity:.35;transition:.3s}
+.evo div small{display:block;font-size:11px;color:var(--navy);font-weight:600}
+.evo div.on{opacity:1;transform:scale(1.15)}
+.sm{border:2px solid var(--sky);background:#fff;color:var(--ink);font-weight:700;border-radius:16px;padding:6px 12px;font-size:13px;cursor:pointer}
+.sm.fill{background:var(--sky);color:#fff}
+.tip b{display:block;font-size:17px;margin-bottom:4px}
+.tip p{margin:0;font-size:14px;line-height:1.6}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.foot{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+.foot button{border:0;background:#e3f2fb;color:var(--ink);border-radius:14px;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer}
+.toast{text-align:center;font-size:13px;min-height:20px;color:var(--ink);margin-top:10px;font-weight:600}
+@media(min-width:640px){.wrap{padding-top:24px}.chara{width:220px;height:220px}.chara .em{font-size:120px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo"><span aria-hidden="true">🐥</span><span data-i18n="appName">Piyo Warm-Up</span></div>
+  <div class="lang" data-demo="lang-switch" role="group" aria-label="Language">
+    <button type="button" data-lang="ja" data-demo="lang-ja" aria-pressed="false">日本語</button>
+    <button type="button" data-lang="en" data-demo="lang-en" aria-pressed="false">EN</button>
+  </div>
+</header>
+
+<div class="tabs" role="tablist" data-i18n-aria="modeAria">
+  <button type="button" role="tab" id="tab-warm" data-mode="warm" data-demo="tab-warmup" data-i18n="warm"></button>
+  <button type="button" role="tab" id="tab-cool" data-mode="cool" data-demo="tab-cooldown" data-i18n="cool"></button>
+</div>
+<div class="chips" id="chips" role="group" data-i18n-aria="actAria">
+  <button type="button" data-act="run" data-demo="act-run"></button>
+  <button type="button" data-act="strength" data-demo="act-strength"></button>
+  <button type="button" data-act="walk" data-demo="act-walk"></button>
+</div>
+
+<section class="stage" data-demo="character-area">
+  <div class="bubble" id="bubble" aria-live="polite" data-demo="speech-bubble"></div>
+  <div class="chara" id="chara"><span class="em" id="em" aria-hidden="true">🐥</span><span class="drop" aria-hidden="true">💧</span></div>
+  <div class="lvl"><span id="lvl"></span><span class="mood" id="mood"></span></div>
+  <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="barwrap" data-demo="level-bar"><div id="barfill"></div></div>
+  <div class="next" id="next"></div>
+</section>
+
+<div class="bigwrap">
+  <button type="button" class="big" id="done" data-demo="done-button" data-i18n="done"></button>
+</div>
+<div class="toast" id="toast" aria-live="polite" data-demo="toast"></div>
+
+<section class="card" data-demo="week-card">
+  <h2><span data-i18n="weekTitle"></span><span id="streak" style="font-size:13px"></span></h2>
+  <div class="week" id="week"></div>
+  <div class="sub" id="weekSub"></div>
+</section>
+
+<section class="card" data-demo="evolution-card">
+  <h2 data-i18n="evoTitle"></h2>
+  <div class="evo" id="evo"></div>
+</section>
+
+<section class="card tip" data-demo="tip-card">
+  <h2><span id="tipHead"></span></h2>
+  <b id="tipTitle"></b>
+  <p id="tipDesc"></p>
+  <div class="row">
+    <button type="button" class="sm" id="nextTip" data-demo="next-tip" data-i18n="nextTip"></button>
+    <button type="button" class="sm fill" id="timer" data-demo="timer-button"></button>
+  </div>
+</section>
+
+<div class="foot">
+  <button type="button" id="skip" data-demo="simulate-skip" data-i18n="skip"></button>
+  <button type="button" id="reset" data-demo="reset-button"></button>
+</div>
+</div>
+
+<script>
+const I18N = {
+ja:{
+ title:"Piyo Warm-Up｜ぴよ太と運動前後のストレッチ",appName:"Piyo Warm-Up",
+ modeAria:"ストレッチの種類",actAria:"運動の種類",
+ warm:"🔥 準備運動",cool:"🧊 クールダウン",
+ run:"🏃 ラン",strength:"🏋️ 筋トレ",walk:"🚶 ウォーキング",
+ done:"やった！",weekTitle:"今週のごほうびスタンプ",streak:"🔥 {n}日れんぞく",streak0:"きょうから始めよう",
+ weekSub:"直近7日で {n}日 がんばったよ！",
+ evoTitle:"ぴよ太の進化ステップ",egg:"たまご",chick:"ひよこ",chicken:"ニワトリ",
+ lvl:"Lv.{n} ぴよ太",
+ moodHappy:"ごきげん",moodNormal:"ふつう",moodSad:"しょんぼり",
+ nextEvo:"次の進化まであと{n}回！",nextLv:"レベルアップまであと{n}回！",maxEvo:"最終進化！ りっぱなニワトリ 🎉",
+ nextTip:"次のヒント",timerStart:"⏱ 30秒タイマー",timerRun:"⏱ のこり {n}秒（止める）",
+ timerEnd:"⏱ 30秒おわり！おつかれさま",
+ tipHeadWarm:"🔥 準備運動のヒント",tipHeadCool:"🧊 クールダウンのヒント",
+ skip:"🧪 デモ：2日お休みする",reset:"最初からやり直す",resetAsk:"もう一度押すとリセット",resetDone:"ぴよ太がたまごに戻りました 🥚",
+ skipMsg:"2日お休みしました…ぴよ太がしょんぼり 💧",
+ sayWarm:{run:"ラン前に足首をほぐそう！ぴよ〜っと軽くね",strength:"筋トレ前に肩と腕をぐるぐる回そう！",walk:"歩く前にふくらはぎをのばそう！"},
+ sayCool:{run:"おつかれさま！足をしっかりのばそう",strength:"がんばったね！筋肉をやさしくのばそう",walk:"いい散歩だったね！深呼吸でととのえよう"},
+ saySad:"ぴよ…しばらくストレッチしてないね。1回やって元気にして！",
+ sayHappy:"きょうもありがとう！ぴよ太は元気いっぱいだよ✨",
+ sayDone:["やった〜！ぴよぴよ！","すごい！からだがぽかぽかだね","ナイス！えらいぞ〜","ぴよ太もうれしいよ！"],
+ sayLv:"レベルアップ！ぴよ太が大きくなったよ 🎉",sayEvo:"進化したよ！！ ぴよ太がすがたを変えた ✨",
+ toastDone:"スタンプをゲット！ 🌟 合計 {n}回",
+ tips:{warm:[
+  {t:"足首まわし",d:"片足をつま先立ちにして、足首をゆっくり左右に10回ずつ回そう。"},
+  {t:"腕ぐるぐる",d:"両腕を大きく前まわし・後ろまわし。肩まわりをあたためます。"},
+  {t:"もも上げ",d:"その場でゆっくり20回。ひざを高く上げて心拍をじんわり上げよう。"},
+  {t:"体側のばし",d:"両手を上でくんで、左右にゆっくり倒す。息は止めずに。"}],
+  cool:[
+  {t:"太ももの前のばし",d:"かかとをおしりへ。30秒キープ。反対の足も同じように。"},
+  {t:"ふくらはぎのばし",d:"壁に手をついて片足を後ろへ。かかとを床につけて30秒。"},
+  {t:"前屈でほっと一息",d:"ひざをゆるめて前に倒れよう。ゆっくり深呼吸を3回。"},
+  {t:"肩・背中のばし",d:"片腕を胸の前で反対の腕で引き寄せる。20秒ずつ。"}]}
+},
+en:{
+ title:"Piyo Warm-Up | Stretch with Piyota",appName:"Piyo Warm-Up",
+ modeAria:"Stretch type",actAria:"Workout type",
+ warm:"🔥 Warm-up",cool:"🧊 Cool-down",
+ run:"🏃 Run",strength:"🏋️ Strength",walk:"🚶 Walk",
+ done:"Done!",weekTitle:"This week's stamps",streak:"🔥 {n}-day streak",streak0:"Start today!",
+ weekSub:"You did it on {n} of the last 7 days!",
+ evoTitle:"Piyota's evolution",egg:"Egg",chick:"Chick",chicken:"Chicken",
+ lvl:"Lv.{n} Piyota",
+ moodHappy:"Happy",moodNormal:"Okay",moodSad:"Gloomy",
+ nextEvo:"{n} more to evolve!",nextLv:"{n} more to level up!",maxEvo:"Final form! A proud chicken 🎉",
+ nextTip:"Next tip",timerStart:"⏱ 30-sec timer",timerRun:"⏱ {n}s left (stop)",
+ timerEnd:"⏱ Time's up! Nice work",
+ tipHeadWarm:"🔥 Warm-up tip",tipHeadCool:"🧊 Cool-down tip",
+ skip:"🧪 Demo: skip 2 days",reset:"Start over",resetAsk:"Tap again to reset",resetDone:"Piyota went back to an egg 🥚",
+ skipMsg:"You skipped 2 days... Piyota feels gloomy 💧",
+ sayWarm:{run:"Loosen your ankles before the run! Nice and easy.",strength:"Roll your shoulders and arms before lifting!",walk:"Stretch your calves before the walk!"},
+ sayCool:{run:"Good job! Stretch your legs well.",strength:"You worked hard! Gently stretch your muscles.",walk:"Nice walk! Breathe deeply to settle down."},
+ saySad:"Peep... no stretching for a while. Do one and cheer me up!",
+ sayHappy:"Thanks for today! Piyota is full of energy ✨",
+ sayDone:["Yay! Peep peep!","Great! You feel warm all over","Nice one! Well done!","Piyota is happy too!"],
+ sayLv:"Level up! Piyota grew bigger 🎉",sayEvo:"Evolved!! Piyota changed shape ✨",
+ toastDone:"Stamp earned! 🌟 {n} in total",
+ tips:{warm:[
+  {t:"Ankle circles",d:"Stand on tiptoe on one foot and slowly circle the ankle 10 times each way."},
+  {t:"Arm circles",d:"Swing both arms in big circles, forward then backward, to warm up your shoulders."},
+  {t:"High knees",d:"Slowly lift your knees 20 times in place to raise your heart rate gently."},
+  {t:"Side stretch",d:"Clasp your hands overhead and lean left and right. Keep breathing."}],
+  cool:[
+  {t:"Quad stretch",d:"Pull your heel toward your butt and hold for 30 seconds. Switch legs."},
+  {t:"Calf stretch",d:"Hands on a wall, one leg back with the heel down. Hold for 30 seconds."},
+  {t:"Forward fold",d:"Soften your knees and fold forward. Take 3 slow deep breaths."},
+  {t:"Shoulder & back",d:"Pull one arm across your chest with the other arm. 20 seconds each."}]}
+}};
+
+const SHORT=["日","月","火","水","木","金","土"];
+const SHORT_EN=["Su","Mo","Tu","We","Th","Fr","Sa"];
+let lang="en";
+(function(){
+  let l=null;
+  if(window.APP_LANG==="ja"||window.APP_LANG==="en")l=window.APP_LANG;
+  if(!l){try{const q=new URLSearchParams(location.search).get("lang");if(q==="ja"||q==="en")l=q}catch(e){}}
+  if(!l){try{const s=localStorage.getItem("lang");if(s==="ja"||s==="en")l=s}catch(e){}}
+  lang=l||"en";
+})();
+const L=()=>I18N[lang];
+const fmt=(s,n)=>s.replace("{n}",n);
+
+/* ---------- state ---------- */
+const key=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const ago=n=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-n);return d};
+function sample(){
+  const days={};
+  [1,2,4,5].forEach((n,i)=>{days[key(ago(n))]={w:i%2?0:1,c:i%2?1:1}});
+  return {total:4,days,mode:"warm",act:"run"};
+}
+let S;
+try{S=JSON.parse(localStorage.getItem("piyoState"))}catch(e){S=null}
+if(!S||typeof S.total!=="number"||!S.days)S=sample();
+function save(){try{localStorage.setItem("piyoState",JSON.stringify(S))}catch(e){}}
+const $=id=>document.getElementById(id);
+
+let bubble={type:"idle"},tipIdx=0,timerLeft=0,timerId=null,toast=null,resetArmed=false,popTimer=null;
+
+const stageOf=t=>t<3?"egg":t<9?"chick":"chicken";
+const EMO={egg:"🥚",chick:"🐥",chicken:"🐔"};
+function daysSince(){
+  const ks=Object.keys(S.days).filter(k=>(S.days[k].w||0)+(S.days[k].c||0)>0).sort();
+  if(!ks.length)return null;
+  const [y,m,d]=ks[ks.length-1].split("-").map(Number);
+  const a=new Date(y,m-1,d,12),b=new Date();b.setHours(12,0,0,0);
+  return Math.round((b-a)/864e5);
+}
+function didDay(n){const v=S.days[key(ago(n))];return !!v&&((v.w||0)+(v.c||0)>0)}
+function streak(){let n=didDay(0)?0:1,c=0;while(didDay(n)){c++;n++}return c}
+
+/* ---------- render ---------- */
+function bubbleText(){
+  const t=L(),ds=daysSince();
+  if(bubble.type==="done")return t.sayDone[bubble.i%t.sayDone.length];
+  if(bubble.type==="lv")return t.sayLv;
+  if(bubble.type==="evo")return t.sayEvo;
+  if(bubble.type==="skip")return t.saySad;
+  if(ds!==null&&ds>=2)return t.saySad;
+  return (S.mode==="warm"?t.sayWarm:t.sayCool)[S.act];
+}
+function render(){
+  const t=L();
+  document.documentElement.lang=lang;
+  document.title=t.title;
+  document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=t[e.dataset.i18n]);
+  document.querySelectorAll("[data-i18n-aria]").forEach(e=>e.setAttribute("aria-label",t[e.dataset.i18nAria]));
+  document.querySelectorAll("[data-lang]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
+  ["warm","cool"].forEach(m=>$("tab-"+m).setAttribute("aria-selected",S.mode===m));
+  document.querySelectorAll("#chips button").forEach(b=>{b.textContent=t[b.dataset.act];b.setAttribute("aria-pressed",b.dataset.act===S.act)});
+
+  const st=stageOf(S.total),ds=daysSince(),sad=ds!==null&&ds>=2,today=didDay(0);
+  const lv=1+Math.floor(S.total/3);
+  $("em").textContent=EMO[st];
+  const ch=$("chara");ch.className="chara "+st+(sad?" sad":"")+(ch.classList.contains("pop")?" pop":"");
+  $("lvl").textContent=fmt(t.lvl,lv);
+  const mood=$("mood");
+  mood.textContent=sad?t.moodSad:today?t.moodHappy:t.moodNormal;
+  mood.className="mood"+(sad?" sad":"");
+  const pct=Math.round((S.total%3)/3*100);
+  $("barfill").style.width=Math.max(pct,6)+"%";
+  $("barwrap").setAttribute("aria-valuenow",pct);
+  let nx;
+  if(st==="chicken")nx=t.maxEvo;
+  else{const need=(st==="egg"?3:9)-S.total;nx=fmt(t.nextEvo,need)}
+  $("next").textContent=nx;
+  $("bubble").textContent=bubbleText();
+
+  // week
+  const wk=$("week");wk.innerHTML="";
+  let cnt=0;
+  for(let i=6;i>=0;i--){
+    const d=ago(i),done=didDay(i);if(done)cnt++;
+    const el=document.createElement("div");
+    el.className="day"+(i===0?" today":"");
+    el.innerHTML='<span>'+(lang==="ja"?SHORT:SHORT_EN)[d.getDay()]+'</span><span class="s">'+(done?"🌟":"▫️")+'</span>';
+    wk.appendChild(el);
+  }
+  $("weekSub").textContent=fmt(t.weekSub,cnt);
+  const sk=streak();
+  $("streak").textContent=sk>0?fmt(t.streak,sk):t.streak0;
+
+  // evolution
+  const evo=$("evo");evo.innerHTML="";
+  ["egg","chick","chicken"].forEach(k=>{
+    const e=document.createElement("div");
+    e.className=k===st?"on":"";
+    e.innerHTML=EMO[k]+"<small>"+t[k]+"</small>";
+    evo.appendChild(e);
+  });
+
+  // tips
+  const list=t.tips[S.mode];
+  const tp=list[tipIdx%list.length];
+  $("tipHead").textContent=S.mode==="warm"?t.tipHeadWarm:t.tipHeadCool;
+  $("tipTitle").textContent=tp.t;$("tipDesc").textContent=tp.d;
+  $("timer").textContent=timerId?fmt(t.timerRun,timerLeft):(timerLeft===-1?t.timerEnd:t.timerStart);
+  $("reset").textContent=resetArmed?t.resetAsk:t.reset;
+  $("toast").textContent=toast?(toast.type==="done"?fmt(t.toastDone,toast.n):toast.type==="skip"?t.skipMsg:t.resetDone):"";
+}
+
+/* ---------- actions ---------- */
+function burst(){
+  const w=document.querySelector(".bigwrap"),em=["🌟","⭐","✨","💛","💙"];
+  for(let i=0;i<12;i++){
+    const s=document.createElement("span");s.className="cf";s.textContent=em[i%em.length];
+    const a=Math.PI*2*i/12,r=70+Math.random()*50;
+    s.style.setProperty("--dx",Math.cos(a)*r+"px");
+    s.style.setProperty("--dy",Math.sin(a)*r-20+"px");
+    w.appendChild(s);setTimeout(()=>s.remove(),950);
+  }
+}
+$("done").addEventListener("click",()=>{
+  const before=S.total,sb=stageOf(before),lb=1+Math.floor(before/3);
+  S.total++;
+  const k=key(ago(0));
+  const v=S.days[k]||(S.days[k]={w:0,c:0});
+  v[S.mode==="warm"?"w":"c"]=(v[S.mode==="warm"?"w":"c"]||0)+1;
+  const sa=stageOf(S.total),la=1+Math.floor(S.total/3);
+  bubble=sa!==sb?{type:"evo"}:la!==lb?{type:"lv"}:{type:"done",i:Math.floor(Math.random()*9)};
+  toast={type:"done",n:S.total};
+  save();burst();
+  const ch=$("chara");ch.classList.add("pop");
+  clearTimeout(popTimer);popTimer=setTimeout(()=>ch.classList.remove("pop"),600);
+  render();
+});
+document.querySelectorAll("[data-mode]").forEach(b=>b.addEventListener("click",()=>{
+  S.mode=b.dataset.mode;tipIdx=0;bubble={type:"idle"};toast=null;save();render();
+}));
+document.querySelectorAll("#chips button").forEach(b=>b.addEventListener("click",()=>{
+  S.act=b.dataset.act;bubble={type:"idle"};save();render();
+}));
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>{
+  lang=b.dataset.lang;try{localStorage.setItem("lang",lang)}catch(e){}render();
+}));
+$("nextTip").addEventListener("click",()=>{tipIdx++;render()});
+$("timer").addEventListener("click",()=>{
+  if(timerId){clearInterval(timerId);timerId=null;timerLeft=0;render();return}
+  timerLeft=30;
+  timerId=setInterval(()=>{
+    timerLeft--;
+    if(timerLeft<=0){clearInterval(timerId);timerId=null;timerLeft=-1}
+    render();
+  },1000);
+  render();
+});
+$("skip").addEventListener("click",()=>{
+  const nd={};
+  Object.keys(S.days).forEach(k=>{
+    const [y,m,d]=k.split("-").map(Number);
+    const x=new Date(y,m-1,d,12);x.setDate(x.getDate()-2);
+    nd[key(x)]=S.days[k];
+  });
+  S.days=nd;bubble={type:"skip"};toast={type:"skip"};save();render();
+});
+$("reset").addEventListener("click",()=>{
+  if(!resetArmed){resetArmed=true;render();setTimeout(()=>{if(resetArmed){resetArmed=false;render()}},3500);return}
+  resetArmed=false;
+  S={total:0,days:{},mode:S.mode,act:S.act};
+  bubble={type:"idle"};toast={type:"reset"};save();render();
+});
+render();
+</script>
+</body>
+</html>
